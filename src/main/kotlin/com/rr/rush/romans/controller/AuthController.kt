@@ -14,9 +14,14 @@ class AuthController {
     lateinit var authService: AuthService
 
     @PostMapping("/signup")
-    fun register (
+    fun signUp (
         @RequestBody dto: UserSignUpRequestDto){
-         authService.register(dto)
+         authService.signUp(dto)
+    }
+    @PostMapping("/login")
+    fun signIn (
+        @RequestBody dto: UserSignUpRequestDto):Boolean{
+        authService.login(dto)
     }
 
 }

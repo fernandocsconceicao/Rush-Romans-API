@@ -8,5 +8,5 @@ import java.util.*
 @Repository
 
  interface AuthRepository : JpaRepository<AuthData, UUID> {
-    fun findPasswordByUsername(username: String): String?
+    fun findByUsername(username: String): Optional<AuthData>
 }

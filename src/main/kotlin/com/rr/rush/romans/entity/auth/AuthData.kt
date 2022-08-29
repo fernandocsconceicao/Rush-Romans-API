@@ -18,10 +18,13 @@ class AuthData(
     @Column(nullable = false, unique = true)
     private var username: String,
     @Column(nullable = false)
-    private var password: String
+    private var password: String,
+    @Column
+    @OneToMany(mappedBy = "userData",fetch = FetchType.EAGER)
+    private var rules: MutableCollection<Rule>
 ) : UserDetails, Serializable {
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        TODO("Not yet implemented")
+    override fun getAuthorities(): MutableCollection<Rule> {
+        return rules
     }
 
 
@@ -53,7 +56,7 @@ class AuthData(
         private val bCryptPasswordEncoder= BCryptPasswordEncoder()
 
             fun buildFromSignUp(dto: UserSignUpRequestDto):AuthData{
-                return AuthData(null,dto.username, bCryptPasswordEncoder.encode(dto.password))
+                return AuthData(null,dto.username, bCryptPasswordEncoder.encode(dto.password), mutableListOf())
             }
         private const val serialVersionUID = 1L
     }
